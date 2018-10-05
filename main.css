@@ -1,0 +1,162 @@
+@font-face {
+	font-family: Interstate;
+	src: url(Interstate-LightCompressed.otf);
+}
+html {}
+body{
+	margin:0;
+	overflow:hidden;
+    width: 1920px;
+    height: 1080px;
+	text-transform: uppercase;
+	font-family: Interstate;
+	letter-spacing: 3px;
+}
+.rotate {
+	/* comment out this block to code to save your neck while making changes*/
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
+    transform-origin: center;
+	margin: -420px 0 0 420px;
+	/*comment out this block to code to save your neck while making changes */	
+	width: 1080px;
+    height: 1920px;	
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.container {
+    background-image: url(MOA-Ticker12.png);
+    background-repeat: no-repeat;
+	width: 1080px;
+    height: 1920px;	
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#weather_container {
+	position: absolute;
+    top: 450px;
+    color: #fff;
+	width: 308px;
+}
+#date_container {
+    position: absolute;
+    bottom: 40px;
+    left: 75px;
+    color: #fff;
+    font-size: 60px;
+}
+#time_container {
+    position: absolute;
+    bottom: 68px;
+    right: -22px;
+    color: #fff;
+    font-size: 80px;
+    margin: auto;
+    box-sizing: border-box;
+    transform: skewX(20deg);
+    width: 325px;
+    height: 125px;
+    padding: 14px 0 0 85px;
+}
+#time_container .inner {
+    transform: skewX(-20deg);
+    position: relative;
+    display: inline-block;
+}
+.weather_box {
+	text-align: center;
+    height: 240px;
+    font-size: 30px;
+    border-bottom: 2px solid;
+    width: 290px;
+    box-sizing: border-box;
+    margin: 25px 10px 10px 10px;
+}
+.weather_box:last-child {
+	border:none;
+}
+.day {
+    font-size: 35px;
+	margin-bottom: 10px;
+}
+sup {
+	font-size: 40px;
+}
+.deg {
+	font-size:40px;
+}
+.ampm,.deg {
+    font-size: 40px;
+}
+.temp.high {
+    font-size: 35px;
+ 
+}
+.weather_box img {
+    margin: 0;
+    width: 65px;
+	top: 5px;
+    position: relative;
+}
+
+.side-bar {
+	position: absolute;
+    width: 310px;
+    height: 100%;
+	opacity:0.8;
+}
+
+.color-transition {
+    -webkit-animation: glowing 20s infinite;
+    -moz-animation: glowing 20s infinite;
+    -ms-animation: glowing 20s infinite;
+    -o-animation: glowing 20s infinite;
+    animation: glowing 20s infinite;
+}
+
+@-webkit-keyframes glowing {
+  0% { background-color: #a41260; }
+  20% { background-color: #f1732f; }
+	40% { background-color: #efb534; }
+	60% { background-color: #4dae33; }
+	80% { background-color: #117c9e; }
+	100% { background-color: #a41260; }
+}
+@-moz-keyframes glowing {
+  0% { background-color: #a41260; }
+  20% { background-color: #f1732f; }
+	40% { background-color: #efb534; }
+	60% { background-color: #4dae33; }
+	80% { background-color: #117c9e; }
+	100% { background-color: #a41260; }
+}
+@-ms-keyframes glowing {
+  0% { background-color: #a41260; }
+  20% { background-color: #f1732f; }
+	40% { background-color: #efb534; }
+	60% { background-color: #4dae33; }
+	80% { background-color: #117c9e; }
+	100% { background-color: #a41260; }
+}
+@-o-keyframes glowing {
+  0% { background-color: #a41260; }
+  20% { background-color: #f1732f; }
+	40% { background-color: #efb534; }
+	60% { background-color: #4dae33; }
+	80% { background-color: #117c9e; }
+	100% { background-color: #a41260; }
+}
+@keyframes glowing {
+  0% { background-color: #a41260; }
+  20% { background-color: #f1732f; }
+	40% { background-color: #efb534; }
+	60% { background-color: #4dae33; }
+	80% { background-color: #117c9e; }
+	100% { background-color: #a41260; }
+}
