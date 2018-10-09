@@ -29,7 +29,7 @@ body{
     left: 0;
 }
 .container {
-    background-image: url(MOA-Ticker_3.png);
+    background-image: url(MOA-Ticker_3_straight.png);
     background-repeat: no-repeat;
 	width: 1080px;
     height: 1920px;	
@@ -45,7 +45,7 @@ body{
     overflow: hidden;
     top: 450px;
     color: #fff;
-    width: 308px;
+    width: 310px;
     display: flex;
     flex-direction: column;
      
@@ -70,7 +70,7 @@ body{
     /* background: transparent; */
     background-color: white;
     height:238px;
-    width:510px;
+    width:513px;
     z-index:2;
     font-size:120px;
     text-transform: capitalize;
@@ -202,7 +202,7 @@ sup {
 
 /* Move it (define the animation) */
 .scrollit {
-        animation: scroll 20s linear infinite;
+        animation: scroll 40s linear infinite;
         overflow:hidden;
        
     } 
