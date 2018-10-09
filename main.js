@@ -16,7 +16,8 @@ function getEvents(){
 		},
 		dataType: "xml",
 		success: function (data) {
-			$(data).find("item").each(function () { // or "item" or whatever suits your feed
+			$(data).find("item").each(function () {
+				//if (document.getElementById('weather_container').clientHeight>1300) return;  
 				//Get The Events.  Grab Title + Date Range
 				var singleEvent = $(this);
 				var title = singleEvent.find("title").text();
@@ -41,22 +42,25 @@ function getEvents(){
 				var isToday = false;
 				var today_date = new Date();
 				var month = (today_date.getMonth()+1 > 9) ? today_date.getMonth()+1 : '0'+(today_date.getMonth()+1);
-				var day = (today_date.getDay() > 9) ? today_date.getDay : '0'+(today_date.getDay());				
+				var day = (today_date.getDate() > 9) ? today_date.getDate() : '0'+(today_date.getDate());				
 				var td = today_date.getFullYear()+'-'+ month + '-'+ day;
 				if ((new Date(beginnningDate)).setHours(0,0,0,0) <= (new Date(td)).setHours(0,0,0,0) && 
 				                      (new Date(td)).setHours(0,0,0,0) <= (new Date(endingDate)).setHours(0,0,0,0)) 
 					isToday=true;
-				
+				console.log("bd:"+beginnningDate+":td:"+td);
+
+
 				//0's and ampm's
+				var startam_pm = (eventStartTime.slice(0,2) > 12) ? " P.M." : " A.M.";  // get AM/PM
+				var endam_pm = (eventEndTime.slice(0,2) > 12) ? " P.M." : " A.M.";  // get AM/PM
 				var startHour = (eventStartTime.slice(0,2) > 12) ? eventStartTime.slice(0,2) - 12 : eventStartTime.slice(0,2);  // get hours
 				var endHour = (eventEndTime.slice(0,2) > 12) ? eventEndTime.slice(0,2) - 12 : eventEndTime.slice(0,2);  // get hours
-				var startam_pm = (eventStartTime.slice(0,2) > 12) ? " P.M." : " A.M.";  // get AM/PM
-				var endam_pm = (eventStartTime.slice(0,2) > 12) ? " P.M." : " A.M.";  // get AM/PM
 				eventStartTime = startHour+eventStartTime.slice(2,5)+startam_pm;
 				eventEndTime =   endHour  +eventEndTime.slice(2,5)+endam_pm;
 				
-
-				displayEvents(isToday, isOneDay, beginnningDate.slice(5,10).replace('-','/'), endingDate.slice(5,10).replace('-','/'), eventStartTime, eventEndTime,title);
+				//Is there an override?
+				var override = singleEvent.find("field_date_time_override").text();
+				displayEvents(isToday, isOneDay, beginnningDate.slice(5,10).replace('-','/').replace('/0','/'), endingDate.slice(5,10).replace('-','/').replace('/0','/'), eventStartTime, eventEndTime,title, override);
 				})
 			}
 		})
@@ -81,16 +85,20 @@ function getWeather() {
 	},"json");
 }
 
-function displayEvents(isToday, isOneDay, beginningDate, endingDate, eventStartTime, eventEndTime,title){
+function displayEvents(isToday, isOneDay, beginningDate, endingDate, eventStartTime, eventEndTime,title, override){
 	
 		var output = '<div class="weather_box">';
 			output += '<div class="day">'+title+'</div>';
-			if (isToday){
-				output += '<span class="temp high">TODAY!</span><br/>';
-			} else if (isOneDay){
-				output += '<span class="temp high">'+beginningDate+'</span><br/>';
-			} else output += '<span class="temp high">'+beginningDate+'-'+endingDate+'</span><br/>';
-			output += '<span class="temp high">'+eventStartTime+'-'+eventEndTime+'</span>';
+			if (override!=""){
+				output += '<span class="temp high">'+override+'</span><br/>';
+			} else{
+					if (isToday){
+					output += '<span class="temp high">TODAY!</span><br/>';
+				} else if (isOneDay){
+					output += '<span class="temp high">'+beginningDate+'</span><br/>';
+				} else output += '<span class="temp high">'+beginningDate+'-'+endingDate+'</span><br/>';
+				output += '<span class="temp high">'+eventStartTime+'-'+eventEndTime+'</span>'; 
+			}
 			output += '</div>';
 			$('#weather_container').append(output);
 }
@@ -128,6 +136,7 @@ function displayWeather(r) {
 function getDate() {
 	var today_date = new Date();
 	$('#date_container').html('<span>'+day_txt[today_date.getDay()]+' '+month_txt[today_date.getMonth()]+' '+today_date.getDate()+', '+today_date.getFullYear()+'</span>');
+	$('#blackbox').html('<span></span>');
 }
 function getTime() {
 	var today_date = new Date();
@@ -142,7 +151,7 @@ getEvents();
 getDate();
 setInterval(function(){
 	getEvents();
-	},12600);
+	},126000);
 
 // setInterval(function(){
 // 	getWeather();

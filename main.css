@@ -14,13 +14,13 @@ body{
 }
 .rotate {
 	/* comment out this block to code to save your neck while making changes*/
-    -webkit-transform: rotate(270deg);
+    /* -webkit-transform: rotate(270deg);
     -moz-transform: rotate(270deg);
     -o-transform: rotate(270deg);
     -ms-transform: rotate(270deg);
     transform: rotate(270deg);
     transform-origin: center;
-	margin: -420px 0 0 420px;
+	margin: -420px 0 0 420px; */
 	/*comment out this block to code to save your neck while making changes */	
 	width: 1080px;
     height: 1920px;	
@@ -36,20 +36,47 @@ body{
     position: absolute;
     top: 0;
     left: 0;
+   
 }
 
 #weather_container {
 	position: absolute;
     top: 450px;
     color: #fff;
-	width: 308px;
+    width: 308px;
+    display: flex;
+    flex-direction: column;
+     
+    /* min-height: 100vh; */
 }
+
+#blackbox{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    background-color: black;
+    height:155px;
+    width:310px;
+    z-index:0;
+}
+
+#whitebox{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: grey;
+    height:155px;
+    width:310px;
+    z-index:2;
+}
+
 #date_container {
     position: absolute;
     bottom: 40px;
     left: 75px;
     color: #fff;
     font-size: 60px;
+    z-index:1;
 }
 #time_container {
     position: absolute;
@@ -71,15 +98,16 @@ body{
 }
 .weather_box {
 	text-align: center;
-    height: 240px;
+    flex:1;
     font-size: 30px;
     border-bottom: 2px solid;
     width: 290px;
     box-sizing: border-box;
-    margin: 25px 10px 10px 10px;
+    margin: 10px 10px 10px 10px;
+    padding-bottom: 15px;
 }
 .weather_box:last-child {
-	border:none;
+	/* border:none; */
 }
 .day {
     font-size: 35px;
@@ -95,15 +123,16 @@ sup {
     font-size: 40px;
 }
 .temp.high {
-    font-size: 35px;
+    font-size: 30px;
+   
  
 }
-.weather_box img {
+/* .weather_box img {
     margin: 0;
     width: 65px;
 	top: 5px;
     position: relative;
-}
+} */
 
 .side-bar {
 	position: absolute;
@@ -160,3 +189,22 @@ sup {
 	80% { background-color: #117c9e; }
 	100% { background-color: #a41260; }
 }
+
+/* Move it (define the animation) */
+.scrollit {
+        animation: scroll 20s linear infinite;
+        overflow:hidden;
+       
+    } 
+    /* Move it (define the animation) */
+    
+    
+    @keyframes scroll {
+        0% {
+            transform: translateY(-100%);
+        }
+    
+        100% {     
+            transform: translateY(63%);
+        }
+} 
