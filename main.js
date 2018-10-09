@@ -1,13 +1,12 @@
 var day_txt = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 var month_txt = [ "January", "February", "March", "April", "May", "June",
 "July", "August", "September", "October", "November", "December" ];
-var wwo_api_key = "1dc62aa250664e5ea6c181443161908";
 var wwo_tz_api_key = "1dc62aa250664e5ea6c181443161908";
 var wwo_zip_code = "55425";
 var hourAdjust = 0;
 
 function getEvents(){
-	$('.weather_box').remove();
+	$('.events_box').remove();
 	var feed = "https://moaapi.net/resttest";
 
 	$.ajax(feed, {
@@ -17,7 +16,7 @@ function getEvents(){
 		dataType: "xml",
 		success: function (data) {
 			$(data).find("item").each(function () {
-				//if (document.getElementById('weather_container').clientHeight>1300) return;  
+				//if (document.getElementById('events_container').clientHeight>1300) return;  
 				//Get The Events.  Grab Title + Date Range
 				var singleEvent = $(this);
 				var title = singleEvent.find("title").text();
@@ -34,10 +33,7 @@ function getEvents(){
 				//is single day event
 				var isOneDay = (beginnningDate==endingDate ? true : false);				
 				
-				//determine if today is between first date, second date.  If so, change date to "Today"
-				var todaysDate = new Date(0);	
-				todaysDate.setHours(0,0,0,0);	
-				
+				//determine if today is between first date, second date.  If so, change date to "Today"				
 				//Determine if event is happening today
 				var isToday = false;
 				var today_date = new Date();
@@ -47,8 +43,6 @@ function getEvents(){
 				if ((new Date(beginnningDate)).setHours(0,0,0,0) <= (new Date(td)).setHours(0,0,0,0) && 
 				                      (new Date(td)).setHours(0,0,0,0) <= (new Date(endingDate)).setHours(0,0,0,0)) 
 					isToday=true;
-				console.log("bd:"+beginnningDate+":td:"+td);
-
 
 				//0's and ampm's
 				var startam_pm = (eventStartTime.slice(0,2) > 12) ? " P.M." : " A.M.";  // get AM/PM
@@ -65,29 +59,10 @@ function getEvents(){
 			}
 		})
 }
-			
-
-
-function getWeather() {
-	var lastWeather = localStorage.getItem('lastWeather');
-	
-	if (lastWeather && Date.now() < lastWeather) {
-		console.log('dont need weather yet')
-		displayWeather(JSON.parse(localStorage.getItem('weatherJson')))
-		return
-	}
-		
-	$.get("https://api.openweathermap.org/data/2.5/forecast?id=5018739&units=imperial&appid=9b553bddc8f2890875e0441f19e28e46",function(r) {
-		weatherGrabbed = new Date();
-		localStorage.setItem('lastWeather', weatherGrabbed.setMinutes(weatherGrabbed.getMinutes() + 30))
-		localStorage.setItem('weatherJson', JSON.stringify(r))
-		displayWeather(r)
-	},"json");
-}
 
 function displayEvents(isToday, isOneDay, beginningDate, endingDate, eventStartTime, eventEndTime,title, override){
 	
-		var output = '<div class="weather_box">';
+		var output = '<div class="events_box">';
 			output += '<div class="day">'+title+'</div>';
 			if (override!=""){
 				output += '<span class="temp high">'+override+'</span><br/>';
@@ -100,37 +75,7 @@ function displayEvents(isToday, isOneDay, beginningDate, endingDate, eventStartT
 				output += '<span class="temp high">'+eventStartTime+'-'+eventEndTime+'</span>'; 
 			}
 			output += '</div>';
-			$('#weather_container').append(output);
-}
-
-function displayWeather(r) {
-	$('.weather_box').remove();
-	var totalDays = 0
-	var lastDay,currentDay,highTemp,icon
-	for (var t in r.list) {
-		if (totalDays >= 5) break
-		item = r.list[t]
-		dateTime = item.dt_txt.split(' ')
-		currentDay = dateTime[0]
-		if (!lastDay) lastDay = currentDay
-		if (dateTime[1] == "12:00:00") icon = item.weather[0].icon
-		if (lastDay != currentDay) {
-			split_date = lastDay.split('-');
-			totalDays++
-			var day = new Date(split_date[0],split_date[1]-1,split_date[2]);
-			var output = '<div class="weather_box">';
-			output += '<div class="day">'+(totalDays==1 ? "Today" : day_txt[day.getDay()] )+'</div>';
-			output += '<span class="temp high">'+Math.ceil((highTemp ? highTemp : item.main.temp_max))+'<sup><span class="deg">&deg;</span>F</sup></span>';
-			output += '<img src="icons/new/wthr-'+(icon ? icon : item.weather[0].icon)+'.png">';
-			output += '</div>';
-			$('#weather_container').append(output);
-			highTemp = null			
-			icon = null			
-		}
-		highTemp = (!highTemp || highTemp < item.main.temp_max ? item.main.temp_max : highTemp)
-		
-		lastDay = currentDay
-	}	
+			$('#events_container').append(output);
 }
 
 function getDate() {
@@ -146,16 +91,12 @@ function getTime() {
 	var am_pm = (getHours >= 12) ? " P.M." : " A.M.";  // get AM/PM
 	$('#time_container').html('<span class="inner">'+hour+':'+minutes+'<span class="ampm">'+am_pm+'</span></span>');
 }
-//getWeather();
 getEvents();
 getDate();
 setInterval(function(){
 	getEvents();
 	},126000);
 
-// setInterval(function(){
-// 	getWeather();
-// },30000*60);
 function startTime() {
 	setInterval(function(){
 		getTime();
