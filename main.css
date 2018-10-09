@@ -29,7 +29,7 @@ body{
     left: 0;
 }
 .container {
-    background-image: url(MOA-Ticker12.png);
+    background-image: url(MOA-Ticker_3.png);
     background-repeat: no-repeat;
 	width: 1080px;
     height: 1920px;	
@@ -68,6 +68,7 @@ body{
     height:155px;
     width:310px;
     z-index:2;
+    
 }
 
 #date_container {
